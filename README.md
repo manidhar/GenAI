@@ -64,6 +64,30 @@ cd 04_Ollama_fastapi
 uvicorn ollama_api:app --reload --port 8000
 ```
 
+### LangGraph Examples (09_langGraph)
+
+The LangGraph examples demonstrate how to build and visualize AI workflows using LangGraph.
+
+#### Running the Hello World Example
+
+From the `09_langGraph` directory:
+```bash
+# Run as a local package
+python -m basics.hello_world
+```
+
+Or from the project root:
+```bash
+# Run as part of the full project package
+python -m 09_langGraph.basics.hello_world
+```
+
+The hello world example will:
+1. Create a simple graph with "hello" and "bye" nodes
+2. Process a message through the graph
+3. Display a visualization of the graph structure
+4. Print the final output
+
 ## RQ Queue (08_rag_queue)
 
 This project includes a small RQ-based queue for retrieval-augmented generation (RAG). The queue lives in `08_rag_queue` and uses Valkey/Redis (port 6379) and RQ workers to process jobs.
