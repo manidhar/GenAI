@@ -4,7 +4,7 @@
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/manidhar/GenAI.git
 cd GeniAI
 ```
 
@@ -63,6 +63,55 @@ GeniAI/
 cd 04_Ollama_fastapi
 uvicorn ollama_api:app --reload --port 8000
 ```
+
+## RQ Queue (08_rag_queue)
+
+This project includes a small RQ-based queue for retrieval-augmented generation (RAG). The queue lives in `08_rag_queue` and uses Valkey/Redis (port 6379) and RQ workers to process jobs.
+
+Important notes
+- The worker code initializes heavy native libraries (OpenAI client, HuggingFace tokenizers, Qdrant client). To avoid macOS fork-related crashes and deadlocks, the repository initializes these resources lazily inside the job function and requires `TOKENIZERS_PARALLELISM=false` in the environment.
+- If you run workers in containers or via a process manager, ensure the environment variable is exported before the worker process starts.
+
+Environment variables (add them to your `.env`):
+
+```properties
+# Already listed above but callout for RQ
+GEMINI_API_KEY=your_gemini_api_key_here
+base_url=https://generativelanguage.googleapis.com/v1beta/openai/
+TOKENIZERS_PARALLELISM=false
+```
+
+Start the FastAPI server for RQ (serves the enqueue endpoints):
+
+```bash
+# from repo root
+uvicorn 08_rag_queue.server:app --reload --port 8000
+```
+
+Start an RQ worker (single-process example):
+
+```bash
+# ensure env is loaded or exported first
+export TOKENIZERS_PARALLELISM=false
+# run worker (adjust queue name / url as needed)
+rq worker --url redis://localhost:6379 --verbose
+```
+
+Debugging tips
+- If a worker crashes with Objective-C / fork errors on macOS, try the following (debug only):
+
+```bash
+# temporary debug flag (not recommended for production)
+OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES TOKENIZERS_PARALLELISM=false rq worker --url redis://localhost:6379 --verbose
+```
+
+- After making code changes to the worker module, restart the worker process so the new module-level behavior is loaded.
+- If running with Docker / docker-compose, make sure the worker container's environment includes `TOKENIZERS_PARALLELISM=false` and avoid publishing Redis (6379) to the public network; bind it to localhost or secure it with a password.
+
+Where to look
+- Worker implementation: `08_rag_queue/queues/worker.py` (lazy initialization is used to avoid pre-fork native init)
+- Server (enqueue endpoints): `08_rag_queue/server.py`
+
 
 ## Security Notes
 
