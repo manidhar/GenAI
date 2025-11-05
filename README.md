@@ -66,6 +66,36 @@ uvicorn ollama_api:app --reload --port 8000
 
 ### LangGraph Examples (09_langGraph)
 
+The LangGraph examples demonstrate building AI workflows using LangGraph. First, install the required dependencies:
+
+
+#### Running Hello World Example
+
+1. Navigate to the LangGraph directory:
+```bash
+cd 09_langGraph
+```
+
+2. Run the hello world example:
+```bash
+python -m basics.hello_world
+```
+
+This will:
+- Create a simple graph with "hello" and "bye" nodes
+- Process the message "Manidhar" through the graph
+- Generate and display a visualization of the graph structure
+- Print the final output
+
+You can also run it from the project root with:
+```bash
+python -m 09_langGraph.basics.hello_world
+```
+
+The example will show a PNG image of the graph structure and print the message transformations through the nodes.
+
+### LangGraph Examples (09_langGraph)
+
 The LangGraph examples demonstrate how to build and visualize AI workflows using LangGraph.
 
 #### Running the Hello World Example
