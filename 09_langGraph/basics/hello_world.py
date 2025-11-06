@@ -2,19 +2,19 @@ from typing import TypedDict
 from langgraph.graph import END, START, StateGraph
 from util.langgraph_util import display  # relative import from basics to util
 
-class HelloWorldSate(TypedDict):
+class HelloWorldState(TypedDict):
     message: str
 
-def hello(state: HelloWorldSate):
+def hello(state: HelloWorldState):
     print(f"Hello Node : {state['message']}")
     return {"message": "Hello  " + state['message']}
 
-def bye(state: HelloWorldSate):
+def bye(state: HelloWorldState):
     print(f"Bye Node : {state['message']}")
     return {"message": "Bye  " + state['message']}
 
 
-graph=StateGraph(HelloWorldSate)
+graph=StateGraph(HelloWorldState)
 graph.add_node("hello",hello)
 graph.add_node("bye",bye)
 

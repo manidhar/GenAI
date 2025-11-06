@@ -42,7 +42,7 @@ def chatbot(state:State):
 def evaluate_response(state:State)->Literal["chatbot_gemini", "end_node"]:
     print("\n")
     print("Evaluate Node Invoked: ", state)
-    if True:
+    if False:
         return "end_node"
     else:
         return "chatbot_gemini"

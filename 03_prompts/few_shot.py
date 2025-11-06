@@ -34,7 +34,7 @@ response = client.chat.completions.create(
         {"role": "system", "content": SYSTEM_PROMPT},
         {
             "role": "user",
-            "content": "write program to implement fibonacci series in python"
+            "content": "write a program in javascript to add two numbers"
         }
     ]
 )

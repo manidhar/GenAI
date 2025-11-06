@@ -19,7 +19,7 @@ response = client.chat.completions.create(
     
         {
             "role": "user",
-            "content": "Explain to me how AI works"
+            "content": "Explain to me how AI works in 5 lines"
         }
     ]
 )
