@@ -8,6 +8,10 @@ import gradio as gr
 # --- Load environment variables ---
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+NEO4J_USER=os.getenv("NEO4J_USER")
+NEO4J_PASSWORD=os.getenv("NEO4J_PASSWORD")
+NEO4J_URL=os.getenv("NEO4J_URL")
+
 
 # --- Initialize OpenAI client ---
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -37,6 +41,14 @@ config = {
         "config": {
             "host": "localhost",
             "port": 6333
+        }
+    },
+    "graph_store": {
+        "provider": "neo4j",
+        "config": {
+            "url":NEO4J_URL,
+            "username": NEO4J_USER,
+            "password": NEO4J_PASSWORD
         }
     }
 }
